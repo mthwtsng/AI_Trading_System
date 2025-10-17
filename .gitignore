@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.venv/
+venv/
+.env
+
+
+# IDE
+.vscode/
+.idea/
+
+# Logs and outputs
+data/output/*
+!data/output/.gitkeep
+data/output/logs/*
+!data/output/logs/.gitkeep
+
