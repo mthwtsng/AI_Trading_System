@@ -1,8 +1,10 @@
 import pandas as pd
 import numpy as np
 
+
+
+"""Sharpe Ratio Calculation"""
 def calculate_sharpe_ratio(returns, risk_free_rate=0.02, periods_per_year=252):
-    """Calculate Sharpe ratio"""
     if len(returns) == 0:
         return 0
     excess_returns = returns - (risk_free_rate / periods_per_year)
@@ -10,8 +12,10 @@ def calculate_sharpe_ratio(returns, risk_free_rate=0.02, periods_per_year=252):
         return 0
     return (excess_returns.mean() * periods_per_year) / (excess_returns.std() * np.sqrt(periods_per_year))
 
+
+
+"""Sortino Ratio Calculation"""
 def calculate_sortino_ratio(returns, risk_free_rate=0.02, periods_per_year=252):
-    """Calculate Sortino ratio"""
     if len(returns) == 0:
         return 0
     excess_returns = returns - (risk_free_rate / periods_per_year)
@@ -20,8 +24,9 @@ def calculate_sortino_ratio(returns, risk_free_rate=0.02, periods_per_year=252):
         return 0
     return (excess_returns.mean() * periods_per_year) / (downside_returns.std() * np.sqrt(periods_per_year))
 
+
+"""Max Drawdown Calculation"""
 def calculate_max_drawdown(portfolio_values):
-    """Calculate maximum drawdown"""
     if len(portfolio_values) == 0:
         return 0
     portfolio_series = pd.Series(portfolio_values)
@@ -29,12 +34,13 @@ def calculate_max_drawdown(portfolio_values):
     drawdown = (portfolio_series - running_max) / running_max
     return drawdown.min()
 
+
+"""Calmar Ratio Calculation"""
 def calculate_calmar_ratio(portfolio_values, periods_per_year=252):
-    """Calculate Calmar ratio"""
     if len(portfolio_values) < 2:
         return 0
     total_return = (portfolio_values[-1] - portfolio_values[0]) / portfolio_values[0]
-    if total_return <= -1:  # Total loss
+    if total_return <= -1:
         return -np.inf
     annualized_return = (1 + total_return) ** (periods_per_year / len(portfolio_values)) - 1
     max_dd = abs(calculate_max_drawdown(portfolio_values))
@@ -43,11 +49,8 @@ def calculate_calmar_ratio(portfolio_values, periods_per_year=252):
     return annualized_return / max_dd
 
 def calculate_enhanced_metrics(portfolio_values, trade_history, initial_cash, periods_per_year=252):
-    """Calculate comprehensive performance metrics"""
     
     returns = pd.Series(portfolio_values).pct_change().dropna()
-    
-    # Trading statistics
     if len(trade_history) > 0:
         trade_returns = trade_history['Return_Pct'].dropna() if 'Return_Pct' in trade_history.columns else pd.Series()
         if len(trade_returns) > 0:
