@@ -1,0 +1,17 @@
+data:
+  symbol: "AAPL"
+  years: 2
+  interval: "1d"
+
+model:
+  lookback_days: [5, 10, 20]
+  confidence_threshold: 0.55
+  validation: "backtest"  # Options: "backtest", "walk_forward"
+
+trading:
+  initial_cash: 10000
+  transaction_cost: 0.001
+  max_risk_per_trade: 0.02
+  max_portfolio_risk: 0.10
+  trailing_stop_pct: 0.05
+  stop_loss_pct: 0.03
